@@ -5,20 +5,19 @@ import json
 import os
 import os.path as osp
 
-import cv2
-import numpy as np
+# import cv2
+# import numpy as np
 
 from coco_utils import find_all_img_anns
 
 DEFAULT_LABELME = {
+    "version": "5.0.2",
     "flags": {},
-    "fillColor": [255, 0, 0, 128],
-    "lineColor": [0, 255, 0, 128],
-    "version": "3.16.7",
-    'imageData': None,
+    # "fillColor": [255, 0, 0, 128],
+    # "lineColor": [0, 255, 0, 128],
 }
 
-DEFAULT_SHAPE = {"flags": {}, "line_color": None, "fill_color": None}
+DEFAULT_SHAPE = {"label": None}
 
 
 def coco2labelme(coco_path, outputs):
@@ -28,8 +27,6 @@ def coco2labelme(coco_path, outputs):
     img_info_list, anns_list = find_all_img_anns(coco)
     for img_info, anns in zip(img_info_list, anns_list):
         labelme_json = copy.deepcopy(DEFAULT_LABELME)
-        labelme_json['imageHeight'] = img_info['height']
-        labelme_json['imageWidth'] = img_info['width']
         shapes = []
         for ann in anns:
             shape = copy.deepcopy(DEFAULT_SHAPE)
@@ -44,15 +41,20 @@ def coco2labelme(coco_path, outputs):
                 continue
             else:
                 shape_type = 'polygon'
-            shape['points'] = points
-            shape['shape_type'] = shape_type
             shape['label'] = label
+            shape['points'] = points
+            shape['group_id'] = None
+            shape['shape_type'] = shape_type
+            shape['flags'] = {}
             shapes.append(shape)
         labelme_json['shapes'] = shapes
         labelme_json['imagePath'] = osp.relpath(
             osp.join(osp.dirname(coco_path), img_info['file_name']), outputs)
+        labelme_json['imageData'] = None
+        labelme_json['imageHeight'] = img_info['height']
+        labelme_json['imageWidth'] = img_info['width']
         with open(osp.join(outputs, osp.splitext(osp.basename(img_info['file_name']))[0] + '.json'), 'w') as f:
-            f.write(json.dumps(labelme_json, indent=4, sort_keys=True))
+            f.write(json.dumps(labelme_json, indent=4, sort_keys=False))
 
 
 if __name__ == '__main__':
