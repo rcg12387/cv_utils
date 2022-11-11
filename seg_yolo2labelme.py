@@ -62,7 +62,7 @@ def seg_yolo2labelme(img_path, yolo_path, labelme_path, cls_file):
             with open(label_name) as f:
                 labels = f.read().strip().splitlines()
                 for label in labels:
-                    if len(label) is 0:
+                    if len(label) == 0:
                         continue
 
                     ann = label.split()
