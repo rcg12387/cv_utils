@@ -109,6 +109,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--labelme', default='labelme', type=str, help='Path to save labels for labelme style')
     parser.add_argument('--yolo', default='labelme', type=str, help='Path to save labels for yolo style')
-    parser.add_argument('--class-file', default=None, type=str, help='Text file that includes category names')
+    parser.add_argument('--cls-file', default=None, type=str, help='Text file that includes category names')
     opt = parser.parse_args()
     labelme2yolo(opt.labelme, opt.yolo, opt.class_file)
