@@ -18,6 +18,8 @@ def seg_labelme2yolo(labelme_path, yolo_path, class_file):
     else:
         classes_file = open(class_file, 'r')
         categories = classes_file.read().strip('\n').split('\n')
+        if categories[0] == '__ignore__':
+            categories.pop(0)
 
     if osp.isfile(labelme_path):
         files = [labelme_path]
