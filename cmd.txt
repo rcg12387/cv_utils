@@ -1,0 +1,34 @@
+labelme2coco.py
+	F:\Dataset\keypoint\face\labelme --img-root ..\images
+ujson2yolo.py
+	--ann F:\Dataset\keypoint\face\labelme\1.json --cls F:\Dataset\keypoint\face\label.txt --dst F:\Dataset\keypoint\face_yolo --lines
+
+# Landmark label conversion between labelme json file and yolo txt file
+keypoints_yolo2labelme.py
+	--images images --yolo yolo --labelme labelme_test
+	Working derectory: F:\Dataset\keypoint\face-test
+keypoints_labelme2yolo
+	--labelme labelme --yolo yolo
+	Working derectory: F:\Dataset\keypoint\face-test
+
+# Add keypoints between two vertices of a rectangle for the experiment
+keypoints_add.py
+	--in-path labelme_val --out-path kp_add/labelme/val
+	Working directory: F:\Dataset\keypoint\carton
+keypoints_add_labelme2yolo.py
+	--labelme labelme/train --yolo yolo/train
+	Working directory: F:\Dataset\keypoint\carton\kp_add
+
+# conversion between keypoints and polygon
+keypoints2polygon_labelme.py
+    --kp json-keypoints/1 --poly json-polygon/1
+	Working directory: F:\BATA\Data\2D
+
+polygon2keypoints_labelme.py
+    --kp json-keypoints/test --poly json-polygon/1
+	Working directory: F:\BATA\Data\2D
+
+# Convert from labelme to yolo
+seg_labelme2yolo.py
+    --labelme json-polygon/1 --yolo labels/1
+    Working directory: F:\BATA\Data\2D
