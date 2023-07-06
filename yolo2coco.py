@@ -4,7 +4,7 @@ import json
 import os
 import os.path as osp
 
-import cv2
+import imagesize
 import numpy as np
 
 from coco_utils import create_coco, insert_img_anns
@@ -22,7 +22,7 @@ def yolo2coco(img_root):
     coco['categories'] = [c for c in coco['categories'] if c['name'] is not None]
     img_list = os.listdir(osp.join(img_root, 'images'))
     for img in img_list:
-        ih, iw, _ = cv2.imread(osp.join(img_root, 'images', img)).shape
+        iw, ih = imagesize.get(osp.join(img_root, img))
         label_name = osp.join(img_root, 'labels',
                               ''.join(*(osp.splitext(img)[:-1])) + '.txt')
         anns = []

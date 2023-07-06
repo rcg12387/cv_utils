@@ -7,7 +7,7 @@ import copy
 import glob
 import itertools
 
-import cv2
+import imagesize
 import numpy as np
 from tqdm import tqdm
 
@@ -54,7 +54,7 @@ def yolo2labelme(img_path, yolo_path, labelme_path, cls_file):
         labelme_json = copy.deepcopy(DEFAULT_LABELME)
 
         img = osp.split(img)[-1]
-        ih, iw, _ = cv2.imread(osp.join(img_path, img)).shape
+        iw, ih = imagesize.get(osp.join(img_path, img))
         label_name = osp.join(yolo_path,
                               ''.join(*(osp.splitext(img)[:-1])) + '.txt')
         shapes = []
