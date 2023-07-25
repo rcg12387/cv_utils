@@ -53,7 +53,7 @@ def keypoints_polygon_lableme2yolo(labelme_path, yolo_path, class_file):
                 # -- bbox
                 x_min, x_max = np.min(points[::2]), np.max(points[::2])
                 y_min, y_max = np.min(points[1::2]), np.max(points[1::2])
-                bbox = [x_min, y_min, x_max - x_min, y_max - y_min]
+                bbox = [(x_min + x_max) / 2, (y_min + y_max) / 2, x_max - x_min, y_max - y_min]
                 # -- keypoints
                 l_idx, r_idx = np.argsort(points[::2])[:2], np.argsort(points[::2])[2:]
                 lt_idx = l_idx[np.argsort(points[1::2][l_idx])[0]]
